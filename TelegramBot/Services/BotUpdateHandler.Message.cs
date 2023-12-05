@@ -39,6 +39,7 @@ public partial class BotUpdateHandler
 
         if (message.Text == "/start")
         {
+            if(message.From.Id)
             await client.SendTextMessageAsync(chatId: message.Chat.Id,
                 text: "Thank you for joining our bot.Please,choose a language!",
                 replyToMessageId: message.MessageId,

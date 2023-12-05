@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
+using TelegramBot.AdminPanel.Extentions;
 using TelegramBot.Data.DbContexts;
+using TelegramBot.Service.Helpers;
 using TelegramBot.Service.Mappers;
 using TelegramBot.Services;
 
@@ -13,11 +15,18 @@ builder.Services.AddSingleton(p => new TelegramBotClient(token));
 builder.Services.AddSingleton<IUpdateHandler,BotUpdateHandler>();
 
 builder.Services.AddHostedService<BotBackgroundService>();
+builder.Services.CustomExtention();
+
+//registration of Database
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
 });
 
+WebHostEnvironment.WebRootPath = Path.GetFullPath("wwwroot");
+
+
+//AutoMapper registration
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 var app = builder.Build();

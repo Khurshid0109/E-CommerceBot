@@ -7,7 +7,8 @@ public class MapperProfile:Profile
 {
     public MapperProfile()
     {
-        CreateMap<ProductForEntryDto, Product>().ReverseMap();
+        CreateMap<ProductForCreateDto, Product>().ReverseMap();
+        CreateMap<ProductForUpdateDto, Product>().ReverseMap();
         CreateMap<ProductForResultDto, Product>().ReverseMap();
 
     }

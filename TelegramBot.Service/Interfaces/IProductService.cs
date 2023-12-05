@@ -6,6 +6,6 @@ public interface IProductService
     Task<bool> RemoveAsync(long id);
     Task<ProductForResultDto> RetrieveByIdAsync(long id);
     Task<IEnumerable<ProductForResultDto>> RetrieveAllAsync();
-    Task<ProductForResultDto> AddAsync(ProductForResultDto dto);
-    Task<ProductForResultDto> ModifyAsync(long id, ProductForResultDto dto);
+    Task<ProductForResultDto> AddAsync(ProductForCreateDto dto);
+    Task<ProductForResultDto> ModifyAsync( ProductForUpdateDto dto);
 }
