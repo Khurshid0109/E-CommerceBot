@@ -1,15 +1,19 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Polling;
+using TelegramBot.Service.Interfaces;
 
 namespace TelegramBot.Services;
 public partial class BotUpdateHandler : IUpdateHandler
 {
     private readonly ILogger<BotUpdateHandler> _logger;
+    private readonly IUserService _userService;
 
-    public BotUpdateHandler(ILogger<BotUpdateHandler> logger)
+    public BotUpdateHandler(ILogger<BotUpdateHandler> logger, 
+        IUserService userService)
     {
         _logger = logger;
+        _userService = userService;
     }
 
     public Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
@@ -23,7 +27,7 @@ public partial class BotUpdateHandler : IUpdateHandler
     {
         var handler = update switch
         {
-            { Message : {Contact:{ } contact } message } => SendContect(botClient, message, contact, cancellationToken),
+            { Message : {Contact:{ } contact } message } => SendContact(botClient, message, contact, cancellationToken),
             { Message: { } message } => HandleMessageAsync(botClient, message, cancellationToken),
             { EditedMessage: { } message } => HandleEditedMessage(botClient, message, cancellationToken),
             _ => HandleUnknownMessage(botClient,update,cancellationToken)
@@ -39,7 +43,7 @@ public partial class BotUpdateHandler : IUpdateHandler
         }
     }
 
-    private async Task SendContect(ITelegramBotClient botClient, Message message, Contact contact, CancellationToken cancellationToken)
+    private async Task SendContact(ITelegramBotClient botClient, Message message, Contact contact, CancellationToken cancellationToken)
     {
         if (contact.UserId != message.From.Id)
             await botClient.SendTextMessageAsync(message.From.Id, "Pashol naxxuy!");

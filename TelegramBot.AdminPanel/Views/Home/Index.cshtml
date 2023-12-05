@@ -1,8 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using TelegramBot.Service.DTOs.Products;
+@model List<ProductForResultDto>
+
+@{
+    ViewData["Title"] = "Mahsulotlar";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="">
+    <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Create New Product</a>
+
+    @foreach (var item in Model)
+    {
+        var photo = "~/images/" + (item.Image);
+
+        <div class="card mt-3 custom-card">
+            <a href="@Url.Action("Details", "Home", new { id = item.Id })">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="@photo" class="img-fluid custom-img" asp-append-version="true" />
+                    </div>
+                    <div class="col-md-8 mt-1">
+
+                        <p><i class="fa-solid fa-box-archive"></i> @item.Price | <i class="fa-solid fa-clock"></i> @item.LastUpdatedDate.ToString("MMM d, yyyy")</p>
+
+                        <h3 class="card-title mt-1">@item.Name</h3>
+                        <p>
+                            @if (item.Description.Length > 100)
+                            {
+                                @item.Description.Substring(0, 100)
+                            }
+                            else
+                            {
+                                @item.Description
+                            }
+                            ...
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
 </div>
