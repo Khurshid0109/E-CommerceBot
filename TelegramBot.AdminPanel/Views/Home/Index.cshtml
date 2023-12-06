@@ -1,42 +1,39 @@
-﻿@using TelegramBot.Service.DTOs.Products;
-@model List<ProductForResultDto>
+﻿@using TelegramBot.Service.DTOs.User
 
-@{
-    ViewData["Title"] = "Mahsulotlar";
-}
+@model List<UserForResultDto>
 
-<div class="">
-    <a href="@Url.Action("Create", "Home")" class="btn btn-primary">Create New Product</a>
+<div class="row justify-content-center">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Number</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">FullName</th>
+                    <th scope="col">TelegramId</th>
+                    <th scope="col">PhoneNumber</th>
+                    <th scope="col">VerificationStep</th>
 
-    @foreach (var item in Model)
-    {
-        var photo = "~/images/" + (item.Image);
+                </tr>
+            </thead>
+            @{
+                int count = 1;
+            }
+            <tbody>
+                @foreach (var t in Model)
+                {
 
-        <div class="card mt-3 custom-card">
-            <a href="@Url.Action("Details", "Home", new { id = item.Id })">
-                <div class="row">
-                    <div class="col-md-4">
-                        <img src="@photo" class="img-fluid custom-img" asp-append-version="true" />
-                    </div>
-                    <div class="col-md-8 mt-1">
-
-                        <p><i class="fa-solid fa-box-archive"></i> @item.Price | <i class="fa-solid fa-clock"></i> @item.LastUpdatedDate.ToString("MMM d, yyyy")</p>
-
-                        <h3 class="card-title mt-1">@item.Name</h3>
-                        <p>
-                            @if (item.Description.Length > 100)
-                            {
-                                @item.Description.Substring(0, 100)
-                            }
-                            else
-                            {
-                                @item.Description
-                            }
-                            ...
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    }
+                    <tr>
+                        <th class="todos-column" scope="row">@count</th>
+                        <th class="todos-column" scope="row">@t.Id</th>
+                        <th class="todos-column" scope="row">@t.FullName</th>
+                        <th class="todos-column" scope="row">@t.TelegramId</th>
+                        <th class="todos-column" scope="row">@t.PhoneNumber</th>
+                        <th class="todos-column" scope="row">@t.VerificationStep</th>
+                    </tr>
+                    count++;
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

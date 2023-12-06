@@ -9,4 +9,6 @@ public interface IUserService
     Task<IEnumerable<UserForResultDto>> RetrieveAllAsync();
     Task<UserForResultDto> AddAsync(UserForEntryDto dto);
     Task<UserForResultDto> ModifyAsync(UserForEntryDto dto);
+    Task<UserForResultDto> RetrieveByPhoneNumber(string phoneNumber);
+    Task<bool> SetStage(long id,int stage);
 }

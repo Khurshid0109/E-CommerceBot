@@ -39,7 +39,8 @@ public class Repository<Tentity> : IRepository<Tentity> where Tentity : Auditabl
 
     public async Task<Tentity> UpdateAsync(Tentity entity)
     {
-        var entry =  _set.Update(entity);
+        var entry =  _context.Update(entity);
+
         await _context.SaveChangesAsync();
 
         return entry.Entity;

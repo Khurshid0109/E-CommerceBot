@@ -1,0 +1,25 @@
+﻿@using TelegramBot.Service.DTOs.Products
+@model List<ProductForResultDto>;
+<div class="product__row">
+    @foreach (var item in Model)
+    {
+            var photo = "/Images/" + (item.Image ?? "logo.jpg");
+        <a href="@Url.Action("Details", "Home", new { id = item.Id })" class="card_box">
+            <div class="card">
+                <div class="img__box">
+                    <img src="@photo" alt="Product Image" />
+                </div>
+                <div class="content__box">
+                    <h3 class="product__title"> @item.Name</h3>
+                    <p class="product__description">
+                        @item.Description
+                    </p>
+                    <div class="product__footer">
+                        <p><span class="product__price">Price</span>@item.Price</p>
+                        <p class="update__date">27.10.2023</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    }
+</div>

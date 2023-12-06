@@ -8,17 +8,12 @@
     <link rel="stylesheet" href="~/css/MyStyle.css" asp-append-version="true"/>
 </head>
 <body>
-    <div class="nav">
+    <div class="navbar">
         <ul class="nav_items">
-            <li>
-                <a href="#">Users</a>
-            </li>
-            <li>
-                <a href="#">Products</a>
-            </li>
-            <li>
-                <a href="#">Orders</a>
-            </li>
+            <li><a href="@Url.Action("Index", "Home")">Users</a></li>
+            <li><a href="@Url.Action("ProductsPage", "Home")">Products</a></li>
+            <li><a href="#">Orders</a></li>
+            <li><a href="@Url.Action("Create", "Home")" class="new_product">New Product</a></li>
         </ul>
     </div>
 
@@ -35,5 +30,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

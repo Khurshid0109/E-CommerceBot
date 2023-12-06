@@ -21,7 +21,7 @@ public class UserService : IUserService
     public async Task<UserForResultDto> AddAsync(UserForEntryDto dto)
     {
         var user = await _repository.SelectAll()
-             .Where(u => u.PhoneNumber == dto.PhoneNumber)
+             .Where(u => u.TelegramId == dto.TelegramId)
              .AsNoTracking()
              .FirstOrDefaultAsync();
 
@@ -80,13 +80,43 @@ public class UserService : IUserService
     public async Task<UserForResultDto> RetrieveByIdAsync(long id)
     {
         var user = await _repository.SelectAll()
-               .Where(u => u.Id==id)
+               .Where(u => u.TelegramId==id)
+               .AsNoTracking()
+               .FirstOrDefaultAsync();
+
+        if (user is null)
+            return null;
+
+        return _mapper.Map<UserForResultDto>(user);
+    }
+
+    public async Task<UserForResultDto> RetrieveByPhoneNumber(string phoneNumber)
+    {
+        var user = await _repository.SelectAll()
+                .Where(u => u.PhoneNumber == phoneNumber)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+        if (user is null)
+            return null;
+
+        return _mapper.Map<UserForResultDto>(user);
+    }
+
+    public async Task<bool> SetStage(long id,int stage)
+    {
+        var user = await _repository.SelectAll()
+               .Where(u => u.TelegramId == id)
                .AsNoTracking()
                .FirstOrDefaultAsync();
 
         if (user is null)
             throw new BotException(404, "User is not found!");
 
-        return _mapper.Map<UserForResultDto>(user);
+        user.VerificationStep= stage;
+        
+        await _repository.UpdateAsync(user);
+
+        return true;
     }
 }

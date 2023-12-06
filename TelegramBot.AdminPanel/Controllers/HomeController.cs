@@ -6,15 +6,24 @@ namespace TelegramBot.AdminPanel.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserService _service;
         private readonly IProductService _productService;
 
-        public HomeController(IProductService productService)
+        public HomeController(IUserService userService, IProductService productService)
         {
+            _service = userService;
             _productService = productService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
+        {
+            var users = await _service.RetrieveAllAsync();
+            return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductsPage()
         {
             var products = await _productService.RetrieveAllAsync();
             return View(products);
@@ -37,11 +46,10 @@ namespace TelegramBot.AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductForCreateDto dto)
         {
-            if (ModelState.IsValid)
-            { 
+           
                 var product=await _productService.AddAsync(dto);
                 return RedirectToAction("details", new { id = product.Id });
-            }
+          
             return View();
         }
     }

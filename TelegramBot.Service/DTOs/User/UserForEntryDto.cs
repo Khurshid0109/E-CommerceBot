@@ -1,5 +1,4 @@
 ﻿
-using TelegramBot.Domain.Entities;
 using TelegramBot.Service.DTOs.Orders;
 
 namespace TelegramBot.Service.DTOs.User;
