@@ -11,6 +11,9 @@ public static class ServiceExtention
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IProductRepository, ProductRepository>();
 
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserRepository, UserRepository>();  
+
         services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
     }
 }

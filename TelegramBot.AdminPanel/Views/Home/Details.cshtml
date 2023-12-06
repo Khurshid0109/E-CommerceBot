@@ -1,34 +1,25 @@
 ﻿@using TelegramBot.Service.DTOs.Products
-
-@model ProductForResultDto;
+@model  ProductForResultDto;
 
 @{
-    ViewData["Title"] = "Details";
-    var photo = "~/images/" + (Model.Image ?? "logo.jpg");
+    var photo = "/Images/" + (Model.Image ?? "logo.jpg");
 }
 
-<div class="container detail">
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <h2>@Model.Name</h2>
-            <hr />
-            <p>@Model.LastUpdatedDate.ToString("MMM d, yyyy")</p>
-            <img src="@photo" asp-append-version=true style="width:100%" />
-            <p id="description">
-                @Model.Description
-            </p>
-            <br />
-           
+<div class="product__row">
+ 
+        <div class="card">
+            <div class="img__box">
+                <img src="@photo" alt="Product Image" />
+            </div>
+            <div class="content__box">
+                <h3 class="product__title"> Model.Name</h3>
+                <p class="product__description">
+                    Model.Description
+                </p>
+                <div class="product__footer">
+                    <p><span class="product__price">Price</span>Model.Price</p>
+                    <p class="update__date">27.10.2023</p>
+                </div>
+            </div>
         </div>
-    </div>
 </div>
-
-<br />
-<br />
-
-<!--For taking break line after each point-->
-<script>
-    var descriptionElement = document.getElementById('description');
-    var descriptionText = descriptionElement.innerHTML;
-    descriptionElement.innerHTML = descriptionText.replace(/\./g, '.<br><br>');
-</script>
